@@ -71,8 +71,8 @@ export default function Heatmap({ logs, t }: HeatmapProps) {
             key={date}
             title={`${date}${score !== null ? ` · Burnout score: ${score}` : ""}`}
             style={{
-              width: 18,
-              height: 18,
+              width: 22,
+              height: 22,
               borderRadius: 4,
               background: colorFor(score),
               opacity: score === null ? 0.4 : 1,

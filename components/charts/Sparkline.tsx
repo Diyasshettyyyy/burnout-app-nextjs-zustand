@@ -15,51 +15,56 @@ export default function Sparkline({ logs, color }: SparklineProps) {
 
   if (recent.length < 2) {
     return (
-      <div style={{ fontSize: 12, opacity: 0.6 }}>
+      <div style={{ fontSize: 13, opacity: 0.6 }}>
         Log more days to view trend
       </div>
     );
   }
 
   const scores = recent.map((l) => calcBurnout([l]));
-  const width = 300;
-  const height = 70;
-  const padding = 10;
+
+  const width = 400;      // wider chart
+  const height = 140;     // taller chart (better visibility)
+  const padding = 20;
+
   const max = Math.max(...scores, 1);
 
   const points = scores.map((s, i) => ({
-    x:
-      padding +
-      (i / (scores.length - 1)) * (width - padding * 2),
-    y:
-      height -
-      padding -
-      (s / max) * (height - padding * 2),
+    x: padding + (i / (scores.length - 1)) * (width - padding * 2),
+    y: height - padding - (s / max) * (height - padding * 2),
     date: recent[i].date,
     value: s,
   }));
 
   const path = points
-    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`)
+    .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
     .join(" ");
 
   return (
-    <div style={{ position: "relative" }}>
-      <svg width="100%" viewBox={`0 0 ${width} ${height}`}>
+    <div style={{ position: "relative", width: "100%" }}>
+      <svg
+        width="100%"
+        viewBox={`0 0 ${width} ${height}`}
+        style={{ overflow: "visible" }}
+      >
+        {/* Line */}
         <path
           d={path}
           fill="none"
           stroke={color}
-          strokeWidth={2.5}
+          strokeWidth={3}
+          strokeLinecap="round"
         />
 
+        {/* Points */}
         {points.map((p, i) => (
           <circle
             key={i}
             cx={p.x}
             cy={p.y}
-            r={4}
+            r={10}
             fill={color}
+            style={{ cursor: "pointer" }}
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
           />
@@ -73,8 +78,8 @@ export default function Sparkline({ logs, color }: SparklineProps) {
             position: "absolute",
             left: `${(points[hovered].x / width) * 100}%`,
             top: 0,
-            transform: "translate(-50%, -110%)",
-            background: "#000",
+            transform: "translate(-50%, -120%)",
+            background: "#111",
             color: "#fff",
             padding: "6px 10px",
             borderRadius: 8,

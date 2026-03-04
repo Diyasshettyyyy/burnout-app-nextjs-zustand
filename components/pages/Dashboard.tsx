@@ -32,7 +32,7 @@ export default function Dashboard({ logs, t }: Props) {
   const recent = logs.slice(-7);
 
   return (
-    <div style={{ display: "grid", gap: 18 }}>
+    <div style={{ display: "grid", gap: 18, maxWidth: 1000, margin: "0 auto" }}>
       {warns.length > 0 && (
         <Card t={t} style={{ background: t.redSoft }}>
           <SectionLabel t={t}>Early Warnings</SectionLabel>
@@ -45,32 +45,60 @@ export default function Dashboard({ logs, t }: Props) {
       )}
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-        <Card t={t} style={{ textAlign: "center" }}>
-          <SectionLabel t={t}>Burnout Risk</SectionLabel>
-          <Donut score={burnout} color={risk.color} />
-          <Pill label={risk.label} color={risk.color} soft={risk.soft} />
-        </Card>
+    <Card
+  t={t}
+  style={{
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 14,
+  }}
+>
+  <SectionLabel t={t}>Burnout Risk</SectionLabel>
 
-        <Card t={t} style={{ textAlign: "center" }}>
-          <SectionLabel t={t}>Recovery</SectionLabel>
-          <Donut score={recovery} color={t.lavender} />
-          <Pill
-            label={recLabel(recovery)}
-            color={t.lavender}
-            soft={t.lavenderSoft}
-          />
-        </Card>
+  <Donut score={burnout} color={risk.color} />
+
+  <div style={{ marginTop: 6 }}>
+    <Pill label={risk.label} color={risk.color} soft={risk.soft} />
+  </div>
+</Card>
+
+        <Card
+  t={t}
+  style={{
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 14,
+  }}
+>
+  <SectionLabel t={t}>Recovery</SectionLabel>
+
+  <Donut score={recovery} color={t.lavender} />
+
+  <div style={{ marginTop: 6 }}>
+    <Pill
+      label={recLabel(recovery)}
+      color={t.lavender}
+      soft={t.lavenderSoft}
+    />
+  </div>
+</Card>
       </div>
 
-      <Card t={t}>
-        <SectionLabel t={t}>Burnout Trend</SectionLabel>
-        <Sparkline logs={logs} color={t.accent} />
-      </Card>
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+  <Card t={t}>
+    <SectionLabel t={t}>Burnout Trend</SectionLabel>
+    <Sparkline logs={logs} color={t.accent} />
+  </Card>
 
-      <Card t={t}>
-        <SectionLabel t={t}>28-Day Heatmap</SectionLabel>
-        <Heatmap logs={logs} t={t} />
-      </Card>
+  <Card t={t}>
+    <SectionLabel t={t}>28-Day Heatmap</SectionLabel>
+    <Heatmap logs={logs} t={t} />
+  </Card>
+</div>
 
       <Card t={t}>
         <SectionLabel t={t}>Top Recommendations</SectionLabel>

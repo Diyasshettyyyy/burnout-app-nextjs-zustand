@@ -9,6 +9,17 @@ export default function Page() {
   const themeKey = useAppStore((s) => s.themeKey);
 
   const t = THEMES[themeKey];
-
-  return <LogWork addLog={addLog} t={t} />;
+  return(
+  <div
+      style={{
+        display: "grid",
+        gap: 18,
+        maxWidth: 1000,
+        margin: "0 auto",
+        width: "100%",
+      }}
+    >
+   <LogWork addLog={addLog} t={t} />
+  </div>
+    );
 }

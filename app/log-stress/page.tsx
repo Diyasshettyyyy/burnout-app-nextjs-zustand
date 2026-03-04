@@ -10,5 +10,17 @@ export default function Page() {
 
   const t = THEMES[themeKey];
 
-  return <LogStress addLog={addLog} t={t} />;
+  return (
+    <div
+      style={{
+        display: "grid",
+        gap: 18,
+        maxWidth: 1000,
+        margin: "0 auto",
+        width: "100%",
+      }}
+    >
+      <LogStress addLog={addLog} t={t} />
+    </div>
+  );
 }
